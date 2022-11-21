@@ -1,0 +1,28 @@
+.gallery{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    height:100%;
+    justify-content: space-between;
+}
+
+.nav-arrow{
+    cursor: pointer;
+}
+
+.image-container{
+    height:100%;
+    position:relative;
+}
+
+/* .image-container[data-status="inactive"]{
+    display:none;
+}
+
+.image-container[data-status="active"]{
+    display:inline;
+} */
+
+.image{
+    height: 100%;
+}
