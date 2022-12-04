@@ -1,28 +1,99 @@
+.modalGalleryContainer{
+    display:grid;
+    grid-template-columns: 22.88px calc(100% - 22.88px - 22.88px) 22.88px;
+    grid-template-rows: 100%;
+    justify-content: space-between;
+    height:100%;
+    width:100%;
+    padding-top: 0px;
+}
+
 .gallery{
+    display:inline-grid;
+    grid-template-rows: calc(100% - 20px) 20px;
+    grid-template-columns: 100%;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+}
+
+.images{    
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width:100%;
+    justify-content: space-evenly;
+    height:100%;
+    overflow: hidden;
+}
+
+.images-container-transition {
+	transition: transform 0.7s ease-in-out;
+}
+
+.nav-arrow{
+    display:grid;
+    align-items: center;
+    width:22.88px;
+
+}
+
+.nav-arrow div{
+    cursor: pointer;
+}
+
+
+.image-container{
+    display: none;
+    transform: scale(0.1);
+}
+
+.active{
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0 5px;
+    width:100%;
+    height:100%;
+
+}
+
+.image-container[data-status='']{
+    transition: transform 0s;
+    transform:translateX(0);
+}
+
+.image-container[data-status="right"]{
+    transition: transform 1s;
+    transform:translateX(33%);
+}
+
+.image-container[data-status="left"]{
+    transition: transform 1s;
+    transform:translateX(-33%);
+}
+
+.image{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-height: 100%;
+    max-width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.activeImgIndicator{
     display:flex;
     flex-direction: row;
     align-items: center;
     height:100%;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1vw;
+    user-select: none;
 }
 
-.nav-arrow{
-    cursor: pointer;
-}
-
-.image-container{
-    height:100%;
-    position:relative;
-}
-
-/* .image-container[data-status="inactive"]{
-    display:none;
-}
-
-.image-container[data-status="active"]{
-    display:inline;
-} */
-
-.image{
-    height: 100%;
+.indicatorSelected{
+    font-size: 2rem;
 }

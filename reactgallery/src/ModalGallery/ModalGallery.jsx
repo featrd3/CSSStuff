@@ -6,7 +6,7 @@ import "./fontello/css/fontello.css"
 
 import "./style.css"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export const ModalGallery = () => {
 
@@ -20,54 +20,80 @@ export const ModalGallery = () => {
 
     const maxIndexOfImagesInGallery = imagesInGallery.length-1;
 
-    const numberOfImagesToDisplay = 4;
+    const numberOfImagesToDisplay = 3;
 
-    var [activeIndex,setActiveIndex] = useState(0);
+    var isLessImagesToDisplayThanAvailable = numberOfImagesToDisplay<=maxIndexOfImagesInGallery+1
 
-    var [indexToDisplay,setIndexToDisplay] = useState(calculateIndexesToDisplay());
-    
-    function calculateIndexesToDisplay (){
-        var arrayOfIndexes = []
-        
-        for (let index = activeIndex ; index<numberOfImagesToDisplay+activeIndex ; index++){
-            let offset = (index>maxIndexOfImagesInGallery)?maxIndexOfImagesInGallery+1:0
-            arrayOfIndexes.push(index - offset)
-        }
-        return (arrayOfIndexes)
+    var [shiftDirection,setShiftDirection] = useState ('');
 
-    }
+    var [activeIndex,setActiveIndex] = useState({activeIndexes:0,displayingLastIndex:false,displayingFirstIndex:true});
 
     function handlePreviousClick(){
-        var tempIndex = activeIndex - 1
-        if (tempIndex<0) tempIndex = maxIndexOfImagesInGallery
-        setActiveIndex(tempIndex)
-    }
-    
-    function handleNextClick(){
-        var tempIndex = activeIndex + 1
-        if (tempIndex>maxIndexOfImagesInGallery) tempIndex = 0
-        setActiveIndex(tempIndex)
-        
+        setShiftDirection('right')
+
+        var tempIndex = activeIndex.activeIndexes - 1
+        if (tempIndex<0) tempIndex = 0
+        setActiveIndex({
+            activeIndexes:tempIndex,
+            displayingFirstIndex:(tempIndex == 0)?true:false,
+            displayingLastIndex:(tempIndex == maxIndexOfImagesInGallery-numberOfImagesToDisplay+1)?true:false,
+            })
     }
 
-    useEffect(()=>{
-    setIndexToDisplay(calculateIndexesToDisplay())
-    },[activeIndex])
+    function handleNextClick(){
+        setShiftDirection('left')
+
+        var tempIndex = activeIndex.activeIndexes + 1
+        if (tempIndex>=maxIndexOfImagesInGallery) tempIndex = maxIndexOfImagesInGallery
+        setActiveIndex({
+            activeIndexes:tempIndex,
+            displayingFirstIndex:(tempIndex == 0)?true:false,
+            displayingLastIndex:(tempIndex == maxIndexOfImagesInGallery-numberOfImagesToDisplay+1)?true:false,
+        })
+    }
+
+    useEffect(()=>{ const myTimeout = setTimeout(()=>setShiftDirection(''), 1000);},[activeIndex])
 
     return(
-    
-    <div className="gallery" data-activeindex={activeIndex}>
-        <div className="nav-arrow nav-previous"><div className="icon-left-open" onClick={()=>handlePreviousClick()}></div></div>
-        {indexToDisplay.map((imageIndex,index)=>{
-            return( 
-                <div className="image-container"  key={index} >
-                    <img className="image" src={imagesInGallery[imageIndex]}/>
-                    {imageIndex}
-                </div>)
-        })}
-
-        <div className="nav-arrow nav-next"><div className="icon-right-open" onClick={()=>handleNextClick()}></div></div>
+    <div className="modalGalleryContainer">
+        <div className="nav-arrow nav-previous">
+            {(isLessImagesToDisplayThanAvailable && !activeIndex.displayingFirstIndex)
+            ?<div className="icon-left-open" onClick={()=>handlePreviousClick()}></div>
+            :<></>
+            }
+        </div>
+        <div className="gallery">
+            <div className="images images-container-transition">
+                {imagesInGallery.map((image,index)=>{
+                    var classTxt = "image-container"
+                    if (activeIndex.activeIndexes<=(index) && activeIndex.activeIndexes+numberOfImagesToDisplay>(index))
+                        classTxt=classTxt+" active"
+                    return( 
+                        <div className={classTxt} key={index} data-position={index} data-status={shiftDirection}>
+                            <img className="image" src={image}/>
+                        </div>)
+                })}
+            </div>
+            <div className="activeImgIndicator">
+                {imagesInGallery.map((image,index)=>{
+                    if(activeIndex.activeIndexes<=(index) && activeIndex.activeIndexes+numberOfImagesToDisplay>(index)){
+                        return(<div className="indicatorSelected" key={index} >
+                            •
+                        </div>)}
+                    else{ 
+                        return(<div className="indicator" key={index} >
+                            •
+                        </div>)
+                    }
+                })} 
+            </div>
+        </div>
+        <div className="nav-arrow nav-next">
+        {(isLessImagesToDisplayThanAvailable && !activeIndex.displayingLastIndex)
+            ?<div className="icon-right-open" key="navigation-right" onClick={()=>handleNextClick()}></div>
+            :<></>
+            }  
+        </div>
     </div>
-
     )
 }
