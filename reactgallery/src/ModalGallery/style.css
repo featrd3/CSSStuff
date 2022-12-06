@@ -30,6 +30,7 @@
 
 .images-container-transition {
 	transition: transform 0.7s ease-in-out;
+    transform:translateX(0.33)
 }
 
 .nav-arrow{
@@ -43,35 +44,13 @@
     cursor: pointer;
 }
 
-
 .image-container{
-    display: none;
-    transform: scale(0.1);
-}
-
-.active{
     position: relative;
     display: inline-block;
     overflow: hidden;
-    margin: 0 5px;
-    width:100%;
     height:100%;
-
-}
-
-.image-container[data-status='']{
-    transition: transform 0s;
-    transform:translateX(0);
-}
-
-.image-container[data-status="right"]{
-    transition: transform 1s;
-    transform:translateX(33%);
-}
-
-.image-container[data-status="left"]{
-    transition: transform 1s;
-    transform:translateX(-33%);
+    flex-shrink: 0;
+    transition: transform 0.7s cubic-bezier(0.45, 0.08, 0.54, 0.93);
 }
 
 .image{
@@ -82,6 +61,7 @@
     max-height: 100%;
     max-width: 100%;
     transform: translate(-50%, -50%);
+    margin: 0 5px;
 }
 
 .activeImgIndicator{
