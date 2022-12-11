@@ -11,11 +11,13 @@ function App() {
     "https://images.unsplash.com/photo-1667835949430-a2516cc93d27?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
     "https://images.unsplash.com/photo-1668787088962-04516e2829cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=718&q=80"
 ]
+
   return (
     <div>
       <div className="CONTAINER">
         <ModalGallery numberOfImagesToDisplay = {5} imagesInGallery = {imagesInGallery} />
       </div>
+
     </div>
 
   );

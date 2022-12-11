@@ -1,4 +1,5 @@
 .CONTAINER{
-    background-color:aqua;
+    background-color:rgb(162, 237, 237);
     height:200px;
+    width:100%;
 }

@@ -1,23 +1,36 @@
-.modalGalleryContainer{
+/* Main container */
+.modalGallery_Container{
+
+    /* variables for sizing of gallery */
+
+    --IndicatorHeight:20px;
+    --NavigationWidth:22.88px;
+
     display:grid;
-    grid-template-columns: 22.88px calc(100% - 22.88px - 22.88px) 22.88px;
+    grid-template-columns: 
+        var(--NavigationWidth) 
+        calc( 100% - var(--NavigationWidth)*2 ) 
+        var(--NavigationWidth);
+
     grid-template-rows: 100%;
     justify-content: space-between;
     height:100%;
     width:100%;
     padding-top: 0px;
 }
+/* Center container for images and indicators */
 
-.gallery{
+.modalGallery_gallery{
     display:inline-grid;
-    grid-template-rows: calc(100% - 20px) 20px;
+    grid-template-rows: calc(100% - var(--IndicatorHeight)) var(--IndicatorHeight);
     grid-template-columns: 100%;
     align-items: center;
     justify-content: center;
     height:100%;
 }
+/* Container for all images */
 
-.images{    
+.modalGallery_images{    
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -28,23 +41,7 @@
     overflow: hidden;
 }
 
-.images-container-transition {
-	transition: transform 0.7s ease-in-out;
-    transform:translateX(0.33)
-}
-
-.nav-arrow{
-    display:grid;
-    align-items: center;
-    width:22.88px;
-
-}
-
-.nav-arrow div{
-    cursor: pointer;
-}
-
-.image-container{
+.modalGallery_images div {
     position: relative;
     display: inline-block;
     overflow: hidden;
@@ -53,7 +50,7 @@
     transition: transform 0.7s cubic-bezier(0.45, 0.08, 0.54, 0.93);
 }
 
-.image{
+.modalGallery_images div img{
     display: block;
     position: absolute;
     top: 50%;
@@ -64,7 +61,22 @@
     margin: 0 5px;
 }
 
-.activeImgIndicator{
+/* Navigation */
+
+.modalGallery_nav-arrow{
+    display:grid;
+    align-items: center;
+    width:22.88px;
+
+}
+
+.modalGallery_nav-arrow div{
+    cursor: pointer;
+}
+
+/* Container for indicators */
+
+.modalGallery_displayedImgIndicator{
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -74,6 +86,6 @@
     user-select: none;
 }
 
-.indicatorSelected{
+.modalGallery_indicatorSelected{
     font-size: 2rem;
 }
